@@ -175,7 +175,7 @@ create your own Health Check and use `health-ref`.
 
 You should also be aware of types of changes that require special care as
 documented in the other module's limitations: [Deletions](
-https://github.com/TyeMcQueen/terraform-google-ingress-to-gke/blob/main/Limitations.md#deletions).
+https://github.com/TyeMcQueen/terraform-google-certificate-map-simple/README.md#deletions).
 
 ### Google Providers
 
