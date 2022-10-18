@@ -51,18 +51,7 @@ variable "cluster-objects" {
 }
 
 
-###--- Generic Options ---###
-
-variable "name-prefix" {
-  description   = <<-EOD
-    The prefix string to prepend to the `.name` of the GCP resources created
-    by this module.  If left as "", then "$${neg-name}-" will be used.
-
-    Example: name-prefix = "my-svc-"
-  EOD
-  type          = string
-  default       = ""
-}
+###--- Generic customization inputs ---###
 
 variable "project" {
   description   = <<-EOD
@@ -70,6 +59,18 @@ variable "project" {
     to "" which uses the default project of the Google client configuration.
 
     Example: project = "my-gcp-project"
+  EOD
+  type          = string
+  default       = ""
+}
+
+variable "name-prefix" {
+  description   = <<-EOD
+    An optional prefix string to prepend to the `.name` of the GCP resources
+    created by this module.  If left as "", then "$${neg-name}-" will be used.
+    Can be useful when migrating to or testing a new configuration.
+
+    Example: name-prefix = "v2-"
   EOD
   type          = string
   default       = ""
