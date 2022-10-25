@@ -87,52 +87,6 @@ variable "description" {
 }
 
 
-###--- Backend options ---###
-
-variable "lb-scheme" {
-  description   = <<-EOD
-    Defaults to "EXTERNAL_MANAGED" ["Modern" Global L7 HTTP(S) LB].
-    Can be set to "EXTERNAL" ["Classic" Global L7 HTTP(S) LB].
-  EOD
-  type          = string
-  default       = "EXTERNAL_MANAGED"
-
-  validation {
-    condition       = (
-      var.lb-scheme == "EXTERNAL" || var.lb-scheme == "EXTERNAL_MANAGED" )
-    error_message   = "Must be \"EXTERNAL\" or \"EXTERNAL_MANAGED\"."
-  }
-}
-
-variable "log-sample-rate" {
-  description   = <<-EOD
-    The fraction [0.0 .. 1.0] of requests to your Backend Service that should
-    be logged.  Setting this to 0.0 will set `log_config.enabled = false`.
-
-    Example: log-sample-rate = 0.01
-  EOD
-  type          = number
-  default       = 1.0
-}
-
-variable "max-rps-per" {
-  description   = <<-EOD
-    The maximum requests-per-second that load balancing will send per
-    endpoint (per pod); set as `max_rate_per_endpoint` in the created
-    Backend Service.  Setting this value too low can cause problems (it
-    will not cause more pods to be spun up but just cause requests to
-    be rejected).  It is possible to use this as a worst-case rate limit
-    that is one part of protecting your pods from excessive request
-    volume, but doing this requires considerable care.  So err on the
-    side of setting it too high rather than too low.
-
-    Example: max-rps-per = 5000
-  EOD
-  type          = number
-  default       = 1000
-}
-
-
 ###--- Health check options ---###
 
 variable "health-ref" {
@@ -200,5 +154,51 @@ variable "healthy-threshold" {
   EOD
   type          = number
   default       = 2
+}
+
+
+###--- Backend options ---###
+
+variable "lb-scheme" {
+  description   = <<-EOD
+    Defaults to "EXTERNAL_MANAGED" ["Modern" Global L7 HTTP(S) LB].
+    Can be set to "EXTERNAL" ["Classic" Global L7 HTTP(S) LB].
+  EOD
+  type          = string
+  default       = "EXTERNAL_MANAGED"
+
+  validation {
+    condition       = (
+      var.lb-scheme == "EXTERNAL" || var.lb-scheme == "EXTERNAL_MANAGED" )
+    error_message   = "Must be \"EXTERNAL\" or \"EXTERNAL_MANAGED\"."
+  }
+}
+
+variable "log-sample-rate" {
+  description   = <<-EOD
+    The fraction [0.0 .. 1.0] of requests to your Backend Service that should
+    be logged.  Setting this to 0.0 will set `log_config.enabled = false`.
+
+    Example: log-sample-rate = 0.01
+  EOD
+  type          = number
+  default       = 1.0
+}
+
+variable "max-rps-per" {
+  description   = <<-EOD
+    The maximum requests-per-second that load balancing will send per
+    endpoint (per pod); set as `max_rate_per_endpoint` in the created
+    Backend Service.  Setting this value too low can cause problems (it
+    will not cause more pods to be spun up but just cause requests to
+    be rejected).  It is possible to use this as a worst-case rate limit
+    that is one part of protecting your pods from excessive request
+    volume, but doing this requires considerable care.  So err on the
+    side of setting it too high rather than too low.
+
+    Example: max-rps-per = 5000
+  EOD
+  type          = number
+  default       = 1000
 }
 

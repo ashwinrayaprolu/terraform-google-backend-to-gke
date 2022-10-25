@@ -103,7 +103,7 @@ locals {
 
 # Create a backend that routes to all of the NEGs:
 resource "google_compute_backend_service" "b" {
-  name      = "${local.prefix}backend"
+  name          = "${local.prefix}backend"
 
   project       = local.project
   description   = var.description

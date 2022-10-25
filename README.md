@@ -3,7 +3,7 @@
 A Terraform module for easily building a Backend Service to a Workload
 running in one or more GKE clusters.  Mostly meant to be used by the
 [terraform-google-ingress-to-gke](
-https://github.com/TyeMcQueen/terraform-google-ingress-to-gke) module
+https://github.com/TyeMcQueen/terraform-google-ingress-to-gke)⧉ module
 but can be useful on its own.
 
 
@@ -13,7 +13,6 @@ but can be useful on its own.
 * [Multi-Region Example](#multi-region-example)
 * [Output Values](#output-values)
 * [Example Workload](#example-workload)
-* [Generic Options](#generic-options)
 * [Backend Service](#backend-service)
 * [Health Check](#health-check)
 * [Limitations](#limitations)
@@ -108,13 +107,6 @@ using the same NEG name to the same GKE Cluster(s), the Backend Service
 will automatically route to this new workload.
 
 
-## Generic Options
-
-See [inputs](#input-variables) or [variables.tf](variables.tf) for more
-information about the generic `name-prefix`, `project`, and `description`
-inputs.
-
-
 ## Backend Service
 
 This module always creates one Backend Service.  You must set `neg-name`
@@ -170,12 +162,13 @@ create your own Health Check and use `health-ref`.
 ## Limitations
 
 * [Google Providers](#google-providers)
-* [Error Handling](/docs/Limitations.md#error-handling)
+* [Error Handling](
+    https://github.com/TyeMcQueen/terraform-google-http-ingress/blob/main/docs/Limitations.md#error-handling)⧉
 * [Handling Cluster Migration](#handling-cluster-migration)
 
 You should also be aware of types of changes that require special care as
 documented in the other module's limitations: [Deletions](
-https://github.com/TyeMcQueen/terraform-google-certificate-map-simple/README.md#deletions).
+https://github.com/TyeMcQueen/terraform-google-certificate-map-simple/README.md#deletions)⧉.
 
 ### Google Providers
 
