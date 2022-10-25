@@ -1,6 +1,6 @@
 
 output "backend" {
-  description = "The Backend Service resource created"
+  description = "A 0- or 1-entry list of Backend Service resource created"
   value       = google_compute_backend_service.b
 }
 

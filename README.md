@@ -13,6 +13,7 @@ but can be useful on its own.
 * [Multi-Region Example](#multi-region-example)
 * [Output Values](#output-values)
 * [Example Workload](#example-workload)
+* [Custom Backend](#custom-backend)
 * [Backend Service](#backend-service)
 * [Health Check](#health-check)
 * [Limitations](#limitations)
@@ -74,8 +75,8 @@ Clusters.
 The resource records for anything created by this module and some other
 data are available as output values.
 
-`module.NAME.backend` will be the resource record for the created Backend
-Service.  You can use `module.NAME.backend.id` to reference this Backend
+`module.NAME.backend[0]` will be the resource record for the created Backend
+Service.  You can use `module.NAME.backend[0].id` to reference this Backend
 when creating other resources.
 
 `module.NAME.health[0]` will be the resource record for the Health Check
@@ -107,11 +108,42 @@ using the same NEG name to the same GKE Cluster(s), the Backend Service
 will automatically route to this new workload.
 
 
+## Custom Backend
+
+There are a lot of possible options when configuring a Backend Service.
+If you need to set some options that are not supported by this module, then
+you can still use this module to find the NEGs that should be added to your
+Backend (and possibly to create the simple health check).
+
+    module "my-neg" {
+      source            = (
+        "github.com/TyeMcQueen/terraform-google-backend-to-gke" )
+      cluster-objects   = [ google_container_cluster.my-gke.id ]
+      neg-name          = "my-svc"
+      lb-scheme         = "" # Don't create the Backend
+    }
+
+    resource "google_compute_backend_service" "b" {
+      ...
+      health_checks             = [ module.my-neg.health[0].id ]
+      dynamic "backend" {
+        for_each                = module.my-neg.negs
+        content {
+          group                 = backend.value.id
+          balancing_mode        = "RATE"
+          max_rate_per_endpoint = 1000
+          # Terraform defaults to 0.8 which makes no sense for "RATE" w/ NEGs:
+          max_utilization       = 0.0
+        }
+      }
+    }
+
+
 ## Backend Service
 
-This module always creates one Backend Service.  You must set `neg-name`
-to the `name` included in an annotation on your Kubernetes Service object
-like:
+This module creates one Backend Service unless you set `lb-scheme` to "".
+You must always set `neg-name` to the `name` included in an annotation on
+your Kubernetes Service object like:
 
     cloud.google.com/neg: '{"exposed_ports": {"80": {"name": "my-svc"}}}'
 

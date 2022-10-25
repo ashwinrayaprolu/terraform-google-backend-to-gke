@@ -162,15 +162,16 @@ variable "healthy-threshold" {
 variable "lb-scheme" {
   description   = <<-EOD
     Defaults to "EXTERNAL_MANAGED" ["Modern" Global L7 HTTP(S) LB].
-    Can be set to "EXTERNAL" ["Classic" Global L7 HTTP(S) LB].
+    Can be set to "EXTERNAL" ["Classic" Global L7 HTTP(S) LB].  Set to ""
+    to skip creation of the Backend (see "Custom Backend" in README.md).
   EOD
   type          = string
   default       = "EXTERNAL_MANAGED"
 
   validation {
-    condition       = (
+    condition       = ( var.lb-scheme == "" ||
       var.lb-scheme == "EXTERNAL" || var.lb-scheme == "EXTERNAL_MANAGED" )
-    error_message   = "Must be \"EXTERNAL\" or \"EXTERNAL_MANAGED\"."
+    error_message   = "Must be \"EXTERNAL\", \"EXTERNAL_MANAGED\", or \"\"."
   }
 }
 
