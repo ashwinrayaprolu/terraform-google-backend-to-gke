@@ -111,9 +111,20 @@ resource "google_compute_backend_service" "b" {
 
   health_checks         = [ local.hc-id ]
   load_balancing_scheme = var.lb-scheme
+  timeout_sec           = var.timeout-secs
+  security_policy       = var.security-policy
+  session_affinity      = var.session-affinity
   log_config {
     enable      = 0.0 < var.log-sample-rate
     sample_rate = var.log-sample-rate
+  }
+
+  dynamic "iap" {
+    for_each                = "" == var.iap-id ? [] : [1]
+    content {
+      oauth2_client_id      = var.iap-id
+      oauth2_client_secret  = var.iap-secret
+    }
   }
 
   dynamic "backend" {
