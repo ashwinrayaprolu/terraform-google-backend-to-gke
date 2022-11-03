@@ -157,6 +157,10 @@ You can set `lb-scheme = "EXTERNAL"` to use "classic" Global L7 HTTP(S)
 Load Balancing.  Note that this value must also be used in the other load
 balancing components you connect to the Backend.
 
+See [inputs](#input-variables) or [variables.tf](variables.tf) for more
+information on customizing the Backend Service via `iap-id`, `iap-secret`,
+`security-policy`, `session-affinity`, and `timeout-secs`.
+
 `log-sample-rate` defaults to 1.0 which logs all requests for your Backend.
 You can set it to 0.0 to disable all request logging.  Or you can set it to
 a value between 0.0 and 1.0 to log a sampling of requests.
@@ -184,8 +188,8 @@ status, then you don't have to have the Health Check and your Workload
 agree on a specific URL to use.  But you can specify the URL path to use
 in `health-path`.
 
-See [inputs](#inputs) or [variables.tf](variables.tf) for more information
-about the other Health Check options: `health-interval-secs`,
+See [inputs](#input-variables) or [variables.tf](variables.tf) for more
+information about the other Health Check options: `health-interval-secs`,
 `health-timeout-secs`, `unhealthy-threshold`, and `healthy-threshold`.
 If you need more customization than those provide, then you can simply
 create your own Health Check and use `health-ref`.
