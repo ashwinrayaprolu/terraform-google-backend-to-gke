@@ -25,6 +25,7 @@ locals {
 # Look up the GKE Cluster(s) created elsewhere:
 data "google_container_cluster" "k" {
   for_each  = var.clusters
+  project   = local.project
   name      = each.value
   location  = each.key
 }
@@ -43,6 +44,7 @@ locals {
 # Look up the NEGs created by a GKE annotation:
 data "google_compute_network_endpoint_group" "neg" {
   for_each  = local.zones
+  project   = local.project
   name      = var.neg-name
   zone      = each.value
 }
