@@ -170,8 +170,8 @@ variable "lb-scheme" {
 
   validation {
     condition       = ( var.lb-scheme == "" ||
-      var.lb-scheme == "EXTERNAL" || var.lb-scheme == "EXTERNAL_MANAGED" )
-    error_message   = "Must be \"EXTERNAL\", \"EXTERNAL_MANAGED\", or \"\"."
+      var.lb-scheme == "EXTERNAL" || var.lb-scheme == "EXTERNAL_MANAGED" || var.lb-scheme == "INTERNAL_MANAGED" )
+    error_message   = "Must be \"EXTERNAL\", \"EXTERNAL_MANAGED\", \"INTERNAL_MANAGED\", or \"\"."
   }
 }
 
