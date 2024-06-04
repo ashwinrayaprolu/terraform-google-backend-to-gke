@@ -84,7 +84,8 @@ resource "google_compute_health_check" "h" {
 
   http_health_check {
     request_path        = var.health-path
-    port_specification  = "USE_SERVING_PORT"
+    #port_specification  = "USE_SERVING_PORT"
+    port_specification  = "15021"
   }
 }
 
